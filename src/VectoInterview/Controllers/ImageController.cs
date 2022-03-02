@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using VectoInterview.Models.Requests;
 using VectoInterview.Services.Interfaces;
@@ -19,12 +20,12 @@ namespace VectoInterview.Controllers
         }
 
         [HttpPut]
-        public async Task<Guid> Upload(IFormFile file) => await _imageService.UploadImageAsync(file);
+        public async Task<Guid> Upload([Required]IFormFile file) => await _imageService.UploadImageAsync(file);
 
         [HttpDelete("{id}")]
         public void Delete([FromRoute] Guid id) => _imageService.DeleteImage(id);
 
         [HttpPost]
-        public async Task<byte[]> Beautify([FromBody] BeautifyImagesRequest request) => await _imageService.BeautifyAsync(request);
+        public async Task<byte[]> Beautify([FromBody, Required] BeautifyImagesRequest request) => await _imageService.BeautifyAsync(request);
     }
 }
